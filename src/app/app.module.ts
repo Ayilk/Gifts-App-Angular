@@ -3,14 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
+import { GiftsModule } from './gifts/gifts.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     BrowserModule,
-    SharedModule
+    SharedModule,
+    GiftsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
