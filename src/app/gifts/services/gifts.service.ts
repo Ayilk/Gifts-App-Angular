@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Gift, SearchGiftsResponse } from '../interfaces/gifts.interfaces';
 
@@ -7,7 +7,8 @@ import { Gift, SearchGiftsResponse } from '../interfaces/gifts.interfaces';
 })
 export class GiftsService {
 
-  private apiKey: string = 'mzq5EH8zMZsmSuyDIdGkKHgD8ixWKb77'
+  private apiKey: string = 'mzq5EH8zMZsmSuyDIdGkKHgD8ixWKb77';
+  private servicioUrl: string ='https://api.giphy.com/v1/gifs';
   private _historial: string[] = [];
  //cambiar any por su tipo correspondiente
   public resultados: Gift[] = [];
@@ -35,8 +36,15 @@ export class GiftsService {
       localStorage.setItem('historial', JSON.stringify(this._historial))      
     }
     
+    const params = new HttpParams()
+    .set('api_key', this.apiKey)
+    .set('limit', '15')
+    .set('q', query)
+
+    console.log(params.toString())
+
     console.log(this._historial)
-    this.http.get<SearchGiftsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=${this.apiKey}&q=${query}&limit=10`)
+    this.http.get<SearchGiftsResponse>(`${this.servicioUrl}/search`, {params})
     .subscribe((respuesta) => {
       console.log(respuesta.data)
       this.resultados = respuesta.data;
