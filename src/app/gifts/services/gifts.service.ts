@@ -22,6 +22,7 @@ export class GiftsService {
     // if(localStorage.getItem('historial')){
     //   this._historial = JSON.parse( localStorage.getItem('historial')!)
     // }
+    this.resultados = JSON.parse(localStorage.getItem('resultados')!) || []
   }
 
   buscarGifts( query: string){
@@ -31,14 +32,15 @@ export class GiftsService {
       this._historial.unshift( query )
       this._historial = this._historial.splice(0,10);
 
-      localStorage.setItem('historial', JSON.stringify(this._historial))
+      localStorage.setItem('historial', JSON.stringify(this._historial))      
     }
+    
     console.log(this._historial)
-    this.http.get<SearchGiftsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=mzq5EH8zMZsmSuyDIdGkKHgD8ixWKb77&q=${query}&limit=10`)
+    this.http.get<SearchGiftsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=${this.apiKey}&q=${query}&limit=10`)
     .subscribe((respuesta) => {
       console.log(respuesta.data)
       this.resultados = respuesta.data;
-      
+      localStorage.setItem('resultados', JSON.stringify(this.resultados))
     })
   }
 }
