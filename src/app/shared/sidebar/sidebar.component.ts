@@ -13,5 +13,9 @@ export class SidebarComponent  {
     return this.giftsService.historial;
   }
 
+  buscar(termino:string){
+    this.giftsService.buscarGifts(termino)
+  }
+
   constructor( private giftsService: GiftsService) { }
 }
